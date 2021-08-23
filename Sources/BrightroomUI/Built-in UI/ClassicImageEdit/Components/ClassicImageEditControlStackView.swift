@@ -45,9 +45,9 @@ extension ClassicImageEditControlChildViewType where Self : UIView {
 
   }
 
-  func push(_ view: UIView & ClassicImageEditControlChildViewType, animated: Bool) {
+    func push(_ view: UIView & ClassicImageEditControlChildViewType, animated: Bool,isSlider:Bool) {
     let controlStackView = find()
-    controlStackView.push(view, animated: animated)
+    controlStackView.push(view, animated: animated, isSlider: isSlider)
   }
 
   func pop(animated: Bool) {
@@ -61,12 +61,18 @@ final class ClassicImageEditControlStackView : UIView {
 
   private var latestNotifiedEdit: EditingStack.Edit?
   
-  func push(_ view: UIView & ClassicImageEditControlChildViewType, animated: Bool) {
+    func push(_ view: UIView & ClassicImageEditControlChildViewType, animated: Bool,isSlider : Bool) {
     
     let currentTop = subviews.last
     
     addSubview(view)
-    view.frame = bounds
+        if isSlider {
+            view.frame = CGRect(x: 0, y: 130, width: bounds.width, height: bounds.height)
+
+        }else{
+            view.frame = bounds
+
+        }
     view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
     if animated {

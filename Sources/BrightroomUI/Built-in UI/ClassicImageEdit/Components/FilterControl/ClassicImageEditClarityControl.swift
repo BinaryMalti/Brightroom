@@ -33,7 +33,7 @@ open class ClassicImageEditClarityControlBase : ClassicImageEditFilterControlBas
   }
 }
 
-open class ClassicImageEditClarityControl : ClassicImageEditClarityControlBase {
+open class ClassicImageEditClarityControl : ClassicImageEditClarityControlBase,HorizontalDialDelegate {
   
   open override var title: String {
     return viewModel.localizedStrings.editClarity
@@ -41,18 +41,16 @@ open class ClassicImageEditClarityControl : ClassicImageEditClarityControlBase {
   
     private lazy var navigationView = ClassicImageEditNavigationView(saveText: viewModel.localizedStrings.done, cancelText: viewModel.localizedStrings.cancel)
   
-  public let slider = ClassicImageEditStepSlider(frame: .zero)
+    public var ruler = HorizontalDial(frame: .zero)
+    public var valueLabel = UILabel()
   
   open override func setup() {
     super.setup()
     
     backgroundColor = ClassicImageEditStyle.default.control.backgroundColor
-    
-    TempCode.layout(navigationView: navigationView, slider: slider, in: self)
-    
-    slider.mode = .plus
-    slider.addTarget(self, action: #selector(valueChanged), for: .valueChanged)
-    
+    backgroundColor = .white
+    SliderCode.layout(label: valueLabel, ruler: ruler, in: self)
+    ruler.delegate = self
     navigationView.didTapCancelButton = { [weak self] in
       
       guard let self = self else { return }
@@ -69,19 +67,31 @@ open class ClassicImageEditClarityControl : ClassicImageEditClarityControlBase {
       self.pop(animated: true)
     }
   }
+    public func horizontalDialDidValueChanged(_ horizontalDial: HorizontalDial) {
+        let degrees = horizontalDial.value
+        let radians = Int(degrees)
+        valueChanged(value: radians)
+    }
+    
+    public func horizontalDialDidEndScroll(_ horizontalDial: HorizontalDial) {
+
+    }
+    
   
   open override func didReceiveCurrentEdit(state: Changes<ClassicImageEditViewModel.State>) {
     
     state.ifChanged(\.editingState.loadedState?.currentEdit.filters.unsharpMask) { value in
-      slider.set(value: value?.intensity ?? 0, in: FilterUnsharpMask.Params.intensity)
+        ruler.value = Double(value?.intensity ?? 0)
+        valueLabel.text = "\(Int(ruler.value))"
+    //  slider.set(value: value?.intensity ?? 0, in: FilterUnsharpMask.Params.intensity)
     }
     
   }
   
   @objc
-  private func valueChanged() {
+    private func valueChanged(value:Int) {
     
-    let value = slider.transition(in: FilterUnsharpMask.Params.intensity)
+  //  let value = slider.transition(in: FilterUnsharpMask.Params.intensity)
     
     guard value != 0 else {
       viewModel.editingStack.set(filters: {
@@ -92,7 +102,7 @@ open class ClassicImageEditClarityControl : ClassicImageEditClarityControlBase {
     
     viewModel.editingStack.set(filters: {
       var f = FilterUnsharpMask()
-      f.intensity = value
+        f.intensity = Double(value)
       f.radius = 0.12
       $0.unsharpMask = f
     })

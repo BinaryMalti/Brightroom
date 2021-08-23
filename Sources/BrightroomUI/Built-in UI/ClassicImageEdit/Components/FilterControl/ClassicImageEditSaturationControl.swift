@@ -33,7 +33,7 @@ open class ClassicImageEditSaturationControlBase : ClassicImageEditFilterControl
   }
 }
 
-open class ClassicImageEditSaturationControl : ClassicImageEditSaturationControlBase {
+open class ClassicImageEditSaturationControl : ClassicImageEditSaturationControlBase, HorizontalDialDelegate {
   
   open override var title: String {
     return viewModel.localizedStrings.editSaturation
@@ -41,17 +41,16 @@ open class ClassicImageEditSaturationControl : ClassicImageEditSaturationControl
   
     private lazy var navigationView = ClassicImageEditNavigationView(saveText: viewModel.localizedStrings.done, cancelText: viewModel.localizedStrings.cancel)
   
-  public let slider = ClassicImageEditStepSlider(frame: .zero)
-  
+    public var ruler = HorizontalDial(frame: .zero)
+    public var valueLabel = UILabel()
+
   open override func setup() {
     super.setup()
     
     backgroundColor = ClassicImageEditStyle.default.control.backgroundColor
-    
-    TempCode.layout(navigationView: navigationView, slider: slider, in: self)
-    
-    slider.addTarget(self, action: #selector(valueChanged), for: .valueChanged)
-    
+    backgroundColor = .white
+    SliderCode.layout(label: valueLabel, ruler: ruler, in: self)
+    ruler.delegate = self
     navigationView.didTapCancelButton = { [weak self] in
       
       guard let self = self else { return }
@@ -68,19 +67,30 @@ open class ClassicImageEditSaturationControl : ClassicImageEditSaturationControl
       self.pop(animated: true)
     }
   }
-  
+    public func horizontalDialDidValueChanged(_ horizontalDial: HorizontalDial) {
+        let degrees = horizontalDial.value
+        let radians = Int(degrees)
+        valueChanged(value: radians)
+     
+    }
+    
+    public func horizontalDialDidEndScroll(_ horizontalDial: HorizontalDial) {
+
+    }
   open override func didReceiveCurrentEdit(state: Changes<ClassicImageEditViewModel.State>)     {
     
     state.ifChanged(\.editingState.loadedState?.currentEdit.filters.saturation) { value in
-      slider.set(value: value?.value ?? 0, in: FilterSaturation.range)
+        ruler.value = Double(value?.value ?? 0)
+           valueLabel.text = "\(Int(ruler.value))"
+      //slider.set(value: value?.value ?? 0, in: FilterSaturation.range)
     }
         
   }
-  
+      
   @objc
-  private func valueChanged() {
+    private func valueChanged(value:Int) {
     
-    let value = slider.transition(in: FilterSaturation.range  )
+   // let value = slider.transition(in: FilterSaturation.range  )
     
     guard value != 0 else {
       viewModel.editingStack.set(filters: {
@@ -91,7 +101,7 @@ open class ClassicImageEditSaturationControl : ClassicImageEditSaturationControl
      
     viewModel.editingStack.set(filters: {
       var f = FilterSaturation()
-      f.value = value
+        f.value = Double(value)
       $0.saturation = f
     })
   }

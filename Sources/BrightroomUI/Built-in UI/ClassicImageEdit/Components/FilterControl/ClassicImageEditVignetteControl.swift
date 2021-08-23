@@ -33,26 +33,24 @@ open class ClassicImageEditVignetteControlBase : ClassicImageEditFilterControlBa
   }
 }
 
-open class ClassicImageEditVignetteControl : ClassicImageEditVignetteControlBase {
+open class ClassicImageEditVignetteControl : ClassicImageEditVignetteControlBase, HorizontalDialDelegate {
   
   open override var title: String {
     return viewModel.localizedStrings.editVignette
   }
   
     private lazy var navigationView = ClassicImageEditNavigationView(saveText: viewModel.localizedStrings.done, cancelText: viewModel.localizedStrings.cancel)
-  
-  public let slider = ClassicImageEditStepSlider(frame: .zero)
+      
+    public var ruler = HorizontalDial(frame: .zero)
+    public var valueLabel = UILabel()
   
   open override func setup() {
     super.setup()
     
     backgroundColor = ClassicImageEditStyle.default.control.backgroundColor
-    
-    TempCode.layout(navigationView: navigationView, slider: slider, in: self)
-    
-    slider.mode = .plus
-    slider.addTarget(self, action: #selector(valueChanged), for: .valueChanged)
-    
+    backgroundColor = .white
+    SliderCode.layout(label: valueLabel, ruler: ruler, in: self)
+    ruler.delegate = self
     navigationView.didTapCancelButton = { [weak self] in
       
       guard let self = self else { return }
@@ -69,18 +67,31 @@ open class ClassicImageEditVignetteControl : ClassicImageEditVignetteControlBase
       self.pop(animated: true)
     }
   }
+    public func horizontalDialDidValueChanged(_ horizontalDial: HorizontalDial) {
+        let degrees = horizontalDial.value
+        let radians = Int(degrees)
+        valueChanged(val: radians)
+    }
+    
+    public func horizontalDialDidEndScroll(_ horizontalDial: HorizontalDial) {
+
+    }
+    
   
   open override func didReceiveCurrentEdit(state: Changes<ClassicImageEditViewModel.State>) {
     
     state.ifChanged(\.editingState.loadedState?.currentEdit.filters.vignette) { value in
-      slider.set(value: value?.value ?? 0, in: FilterVignette.range)
+        ruler.value = Double(value?.value ?? 0)
+        valueLabel.text = "\(Int(ruler.value))"
+      //slider.set(value: value?.value ?? 0, in: FilterVignette.range)
     }
   }
   
   @objc
-  private func valueChanged() {
-    
-    let value = slider.transition(in: FilterVignette.range)
+    private func valueChanged(val:Int) {
+    valueLabel.text = "\(val)"
+    let value = val
+    //transition(in: FilterVignette.range)
     
     guard value != 0 else {
       viewModel.editingStack.set(filters: { $0.vignette = nil })
@@ -90,7 +101,7 @@ open class ClassicImageEditVignetteControl : ClassicImageEditVignetteControlBase
     viewModel.editingStack.set(
       filters: {
         var f = FilterVignette()
-        f.value = value
+        f.value = val
         $0.vignette = f
     })
 

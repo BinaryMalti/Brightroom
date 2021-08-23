@@ -38,7 +38,7 @@ open class ClassicImageEditRootControl: ClassicImageEditRootControlBase {
     case edit
   }
 
-  public var displayType: DisplayType = .filter {
+  public var displayType: DisplayType = .edit {
     didSet {
       guard oldValue != displayType else { return }
       set(displayType: displayType)
@@ -76,27 +76,27 @@ open class ClassicImageEditRootControl: ClassicImageEditRootControlBase {
 
     layout: do {
 
-      let stackView = UIStackView(arrangedSubviews: [filtersButton, editButton])
-      stackView.axis = .horizontal
-      stackView.distribution = .fillEqually
+//      let stackView = UIStackView(arrangedSubviews: [])
+//      stackView.axis = .horizontal
+//      stackView.distribution = .fillEqually
 
       addSubview(containerView)
-      addSubview(stackView)
+  //    addSubview(stackView)
 
       containerView.translatesAutoresizingMaskIntoConstraints = false
-      stackView.translatesAutoresizingMaskIntoConstraints = false
+   //   stackView.translatesAutoresizingMaskIntoConstraints = false
 
       NSLayoutConstraint.activate([
 
         containerView.topAnchor.constraint(equalTo: containerView.superview!.topAnchor),
         containerView.leftAnchor.constraint(equalTo: containerView.superview!.leftAnchor),
         containerView.rightAnchor.constraint(equalTo: containerView.superview!.rightAnchor),
-
-        stackView.topAnchor.constraint(equalTo: containerView.bottomAnchor),
-        stackView.leftAnchor.constraint(equalTo: stackView.superview!.leftAnchor),
-        stackView.rightAnchor.constraint(equalTo: stackView.superview!.rightAnchor),
-        stackView.bottomAnchor.constraint(equalTo: stackView.superview!.bottomAnchor),
-        stackView.heightAnchor.constraint(equalToConstant: 50),
+        containerView.bottomAnchor.constraint(equalTo: containerView.superview!.bottomAnchor),
+//        stackView.topAnchor.constraint(equalTo: containerView.bottomAnchor),
+//        stackView.leftAnchor.constraint(equalTo: stackView.superview!.leftAnchor),
+//        stackView.rightAnchor.constraint(equalTo: stackView.superview!.rightAnchor),
+//        stackView.bottomAnchor.constraint(equalTo: stackView.superview!.bottomAnchor),
+//        stackView.heightAnchor.constraint(equalToConstant: 0),
       ])
 
     }
@@ -154,16 +154,14 @@ open class ClassicImageEditRootControl: ClassicImageEditRootControlBase {
     editButton.isSelected = false
 
     switch displayType {
+    
     case .filter:
-
       presetListControl.frame = containerView.bounds
       presetListControl.autoresizingMask = [.flexibleWidth, .flexibleHeight]
       containerView.addSubview(presetListControl)
-
       filtersButton.isSelected = true
 
     case .edit:
-
       editMenuControl.frame = containerView.bounds
       editMenuControl.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 

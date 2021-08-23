@@ -33,25 +33,23 @@ open class ClassicImageEditTemperatureControlBase : ClassicImageEditFilterContro
   }
 }
 
-open class ClassicImageEditTemperatureControl : ClassicImageEditTemperatureControlBase {
+open class ClassicImageEditTemperatureControl : ClassicImageEditTemperatureControlBase,HorizontalDialDelegate {
   
   open override var title: String {
     return viewModel.localizedStrings.editTemperature
   }
   
     private lazy var navigationView = ClassicImageEditNavigationView(saveText: viewModel.localizedStrings.done, cancelText: viewModel.localizedStrings.cancel)
-  
-  public let slider = ClassicImageEditStepSlider(frame: .zero)
-  
+    public var ruler = HorizontalDial(frame: .zero)
+    public var valueLabel = UILabel()
+
   open override func setup() {
     super.setup()
     
     backgroundColor = ClassicImageEditStyle.default.control.backgroundColor
-    
-    TempCode.layout(navigationView: navigationView, slider: slider, in: self)
-    
-    slider.addTarget(self, action: #selector(valueChanged), for: .valueChanged)
-    
+    backgroundColor = .white
+    SliderCode.layout(label: valueLabel, ruler: ruler, in: self)
+    ruler.delegate = self
     navigationView.didTapCancelButton = { [weak self] in
       
       guard let self = self else { return }
@@ -68,20 +66,29 @@ open class ClassicImageEditTemperatureControl : ClassicImageEditTemperatureContr
       self.pop(animated: true)
     }
   }
-  
+    public func horizontalDialDidValueChanged(_ horizontalDial: HorizontalDial) {
+        let degrees = horizontalDial.value
+        let radians = Int(degrees)
+        valueChanged(value: radians)
+    }
+    
+    public func horizontalDialDidEndScroll(_ horizontalDial: HorizontalDial) {
+
+    }
   open override func didReceiveCurrentEdit(state: Changes<ClassicImageEditViewModel.State>) {
     
     state.ifChanged(\.editingState.loadedState?.currentEdit.filters.temperature) { value in
-
-      slider.set(value: value?.value ?? 0, in: FilterTemperature.range)
+        ruler.value = Double(value?.value ?? 0)
+           valueLabel.text = "\(Int(ruler.value))"
+        //slider.set(value: value?.value ?? 0, in: FilterTemperature.range)
     }
               
   }
   
   @objc
-  private func valueChanged() {
+    private func valueChanged(value:Int) {
     
-    let value = slider.transition(in: FilterTemperature.range)
+   // let value = slider.transition(in: FilterTemperature.range)
     
     guard value != 0 else {
       viewModel.editingStack.set(filters: { $0.temperature = nil })
@@ -90,7 +97,7 @@ open class ClassicImageEditTemperatureControl : ClassicImageEditTemperatureContr
        
     viewModel.editingStack.set(filters: {
       var f = FilterTemperature()
-      f.value = value
+        f.value = Double(value)
       $0.temperature = f
     })
   }

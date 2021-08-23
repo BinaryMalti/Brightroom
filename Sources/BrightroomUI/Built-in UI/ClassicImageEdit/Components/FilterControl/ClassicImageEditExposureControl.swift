@@ -33,7 +33,7 @@ open class ClassicImageEditExposureControlBase : ClassicImageEditFilterControlBa
   }
 }
 
-open class ClassicImageEditExposureControl : ClassicImageEditExposureControlBase {
+open class ClassicImageEditExposureControl : ClassicImageEditExposureControlBase, HorizontalDialDelegate {
   
   open override var title: String {
     return viewModel.localizedStrings.editBrightness
@@ -41,46 +41,57 @@ open class ClassicImageEditExposureControl : ClassicImageEditExposureControlBase
 
     private lazy var navigationView = ClassicImageEditNavigationView(saveText: viewModel.localizedStrings.done, cancelText: viewModel.localizedStrings.cancel)
 
-  public let slider = ClassicImageEditStepSlider(frame: .zero)
-
-  open override func setup() {
-    super.setup()
-
-    backgroundColor = ClassicImageEditStyle.default.control.backgroundColor
-
-    TempCode.layout(navigationView: navigationView, slider: slider, in: self)
-
-    slider.addTarget(self, action: #selector(valueChanged), for: .valueChanged)
-
-    navigationView.didTapCancelButton = { [weak self] in
-      
-      guard let self = self else { return }
-      
-      self.viewModel.editingStack.revertEdit()
-      self.pop(animated: true)
-    }
     
-    navigationView.didTapDoneButton = { [weak self] in
-      
-      guard let self = self else { return }
-      
-      self.viewModel.editingStack.takeSnapshot()
-      self.pop(animated: true)
-    }
-  }
+  public var ruler = HorizontalDial(frame: .zero)
+  public var valueLabel = UILabel()
 
+open override func setup() {
+  super.setup()
+  
+  backgroundColor = ClassicImageEditStyle.default.control.backgroundColor
+  backgroundColor = .white
+  SliderCode.layout(label: valueLabel, ruler: ruler, in: self)
+  ruler.delegate = self
+  navigationView.didTapCancelButton = { [weak self] in
+    
+    guard let self = self else { return }
+    
+    self.viewModel.editingStack.revertEdit()
+    self.pop(animated: true)
+  }
+  
+  navigationView.didTapDoneButton = { [weak self] in
+    
+    guard let self = self else { return }
+    
+    self.viewModel.editingStack.takeSnapshot()
+    self.pop(animated: true)
+  }
+}
+  public func horizontalDialDidValueChanged(_ horizontalDial: HorizontalDial) {
+      let degrees = horizontalDial.value
+      let radians = Int(degrees)
+      valueChanged(value: radians)
+  }
+  
+  public func horizontalDialDidEndScroll(_ horizontalDial: HorizontalDial) {
+
+  }
+  
   open override func didReceiveCurrentEdit(state: Changes<ClassicImageEditViewModel.State>) {
     
     state.ifChanged(\.editingState.loadedState?.currentEdit.filters.exposure) { value in
-      slider.set(value: value?.value ?? 0, in: FilterExposure.range)
+        ruler.value = Double(value?.value ?? 0)
+           valueLabel.text = "\(Int(ruler.value))"
+        // slider.set(value: value?.value ?? 0, in: FilterExposure.range)
     }
     
   }
 
   @objc
-  private func valueChanged() {
+  private func valueChanged(value:Int) {
 
-    let value = slider.transition(in: FilterExposure.range)
+   // let value = slider.transition(in: FilterExposure.range)
     guard value != 0 else {
       viewModel.editingStack.set(filters: {
         $0.exposure = nil
@@ -90,7 +101,7 @@ open class ClassicImageEditExposureControl : ClassicImageEditExposureControlBase
         
     viewModel.editingStack.set(filters: {
       var f = FilterExposure()
-      f.value = value
+        f.value = Double(value)
       $0.exposure = f
     })
     

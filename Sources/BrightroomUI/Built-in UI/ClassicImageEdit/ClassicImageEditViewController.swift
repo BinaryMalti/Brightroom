@@ -30,7 +30,7 @@ import Verge
 @available(*, deprecated, renamed: "ClassicImageEditViewController")
 public typealias PixelEditViewController = ClassicImageEditViewController
 
-public final class ClassicImageEditViewController: UIViewController {
+open class ClassicImageEditViewController: UIViewController, UIScrollViewDelegate {
 
   /**
    - TODO: property names are not comprehensibility.
@@ -86,19 +86,22 @@ public final class ClassicImageEditViewController: UIViewController {
 
   // MARK: - Private Propaties
 
-  private let maskingView: BlurryMaskingView
+   let maskingView: BlurryMaskingView
 
-  private let previewView: ImagePreviewView
+   let previewView: ImagePreviewView
 
-  private let cropView: CropView
+   let cropView: CropView
+    
+    let cancelBtn = UIButton()
+    let doneBtn = UIButton()
 
-  private let editContainerView = UIView()
+   let editContainerView = UIView()
 
-  private let controlContainerView = UIView()
+   let controlContainerView = UIView()
 
-  private let cropButton = UIButton(type: .system)
+   let cropButton = UIButton(type: .system)
 
-  private let stackView = ClassicImageEditControlStackView()
+   let stackView = ClassicImageEditControlStackView()
 
   private lazy var doneButton = UIBarButtonItem(
     title: viewModel.localizedStrings.done,
@@ -114,15 +117,15 @@ public final class ClassicImageEditViewController: UIViewController {
     action: #selector(didTapCancelButton)
   )
 
-  private var subscriptions: Set<VergeAnyCancellable> = .init()
+   var subscriptions: Set<VergeAnyCancellable> = .init()
 
-  private lazy var loadingView = LoadingBlurryOverlayView(
+   lazy var loadingView = LoadingBlurryOverlayView(
     effect: UIBlurEffect(style: .dark),
     activityIndicatorStyle: .whiteLarge
   )
-  private lazy var touchGuardOverlayView = UIView()
+   lazy var touchGuardOverlayView = UIView()
 
-  private let viewModel: ClassicImageEditViewModel
+   let viewModel: ClassicImageEditViewModel
 
   // MARK: - Initializers
 
@@ -169,16 +172,21 @@ public final class ClassicImageEditViewController: UIViewController {
 
   // MARK: - Functions
 
+
   override public func viewDidLoad() {
     // FIXME: Check loading
 
     super.viewDidLoad()
-
+    self.addBackButton(title: "Arrange Artwork")
     cropView.setCropOutsideOverlay(
       .init()&>.do {
         $0.backgroundColor = .white
       }
     )
+    cancelBtn.frame = CGRect(x: 0, y: 0, width: 42, height: 42)
+    doneBtn.frame = cancelBtn.frame
+    cancelBtn.setBackgroundImage(UIImage(named: "ic_close_red")!, for: .normal)
+    doneBtn.setBackgroundImage(UIImage(named: "ic_close_red")!, for: .normal)
     cropView.setCropInsideOverlay(nil)
     cropView.isGuideInteractionEnabled = false
     cropView.isAutoApplyEditingStackEnabled = false
@@ -197,19 +205,21 @@ public final class ClassicImageEditViewController: UIViewController {
 
         view.addSubview(editContainerView)
         view.addSubview(controlContainerView)
-
         editContainerView.accessibilityIdentifier = "app.muukii.pixel.editContainerView"
         controlContainerView.accessibilityIdentifier = "app.muukii.pixel.controlContainerView"
 
+        cancelBtn.translatesAutoresizingMaskIntoConstraints = false
+        doneBtn.translatesAutoresizingMaskIntoConstraints = false
         editContainerView.translatesAutoresizingMaskIntoConstraints = false
         controlContainerView.translatesAutoresizingMaskIntoConstraints = false
-
+        controlContainerView.backgroundColor = .white
+        cancelBtn.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
+        doneBtn.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
         NSLayoutConstraint.activate([
           guide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
           guide.rightAnchor.constraint(equalTo: view.rightAnchor),
           guide.leftAnchor.constraint(equalTo: view.leftAnchor),
-          guide.widthAnchor.constraint(equalTo: guide.heightAnchor, multiplier: 1),
-
+            guide.widthAnchor.constraint(equalTo: guide.heightAnchor, multiplier: 1),
           {
             let c = editContainerView.topAnchor.constraint(equalTo: guide.topAnchor)
             c.priority = .defaultHigh
@@ -272,9 +282,16 @@ public final class ClassicImageEditViewController: UIViewController {
 
       control: do {
         controlContainerView.addSubview(stackView)
-
         stackView.frame = stackView.bounds
         stackView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        stackView.addSubview(cancelBtn)
+        stackView.addSubview(doneBtn)
+        NSLayoutConstraint.activate([
+            cancelBtn.topAnchor.constraint(equalTo: stackView.topAnchor,constant: -21),
+            cancelBtn.leftAnchor.constraint(equalTo: stackView.leftAnchor,constant: 42),
+            doneBtn.topAnchor.constraint(equalTo: stackView.topAnchor, constant: -21),
+            doneBtn.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -42),
+        ])
       }
     }
 
@@ -288,7 +305,7 @@ public final class ClassicImageEditViewController: UIViewController {
           viewModel: viewModel
         )
       ),
-      animated: false
+        animated: false, isSlider: false
     )
 
     viewModel.sinkState(queue: .mainIsolated()) { [weak self] state in
@@ -307,7 +324,9 @@ public final class ClassicImageEditViewController: UIViewController {
       }
     }
     .store(in: &subscriptions)
-
+    stackView.bringSubviewToFront(cancelBtn)
+    stackView.bringSubviewToFront(doneBtn)
+    stackView.backgroundColor = .white
     viewModel.editingStack.start()
   }
 
@@ -315,8 +334,10 @@ public final class ClassicImageEditViewController: UIViewController {
     super.viewWillAppear(animated)
     view.layoutIfNeeded()
   }
+    
 
   // MARK: - Private Functions
+    
 
   @objc
   private func didTapDoneButton() {
@@ -330,7 +351,7 @@ public final class ClassicImageEditViewController: UIViewController {
 
   private func updateUI(state: Changes<ClassicImageEditViewModel.State>) {
     state.ifChanged(\.title) { title in
-      navigationItem.title = title
+      navigationItem.title = ""
     }
 
     state.ifChanged(\.maskingBrushSize) {
@@ -346,8 +367,8 @@ public final class ClassicImageEditViewController: UIViewController {
       switch mode {
       case .crop:
 
-        navigationItem.rightBarButtonItem = nil
-        navigationItem.leftBarButtonItem = nil
+       // navigationItem.rightBarButtonItem = nil
+       // navigationItem.leftBarButtonItem = nil
 
         cropView.isHidden = false
         previewView.isHidden = true
@@ -359,8 +380,8 @@ public final class ClassicImageEditViewController: UIViewController {
 
       case .masking:
 
-        navigationItem.rightBarButtonItem = nil
-        navigationItem.leftBarButtonItem = nil
+       // navigationItem.rightBarButtonItem = nil
+      //  navigationItem.leftBarButtonItem = nil
 
         cropView.isHidden = true
         previewView.isHidden = false
@@ -371,8 +392,8 @@ public final class ClassicImageEditViewController: UIViewController {
 
       case .editing:
 
-        navigationItem.rightBarButtonItem = nil
-        navigationItem.leftBarButtonItem = nil
+      //  navigationItem.rightBarButtonItem = nil
+      //  navigationItem.leftBarButtonItem = nil
 
         cropView.isHidden = true
         previewView.isHidden = false
@@ -383,9 +404,9 @@ public final class ClassicImageEditViewController: UIViewController {
 
       case .preview:
 
-        navigationItem.setHidesBackButton(true, animated: false)
-        navigationItem.rightBarButtonItem = doneButton
-        navigationItem.leftBarButtonItem = cancelButton
+      //  navigationItem.setHidesBackButton(true, animated: false)
+      //  navigationItem.rightBarButtonItem = doneButton
+     //   navigationItem.leftBarButtonItem = cancelButton
 
         previewView.isHidden = false
         cropView.isHidden = true
@@ -436,4 +457,47 @@ public final class ClassicImageEditViewController: UIViewController {
       }
     }
   }
+}
+extension UIViewController {
+
+    func addBackButton(title:String) {
+        navigationController?.isNavigationBarHidden = false
+        let backMenu: UIButton = UIButton()
+        backMenu.setImage(UIImage(named: "ic_black_left_arrow"), for: .normal)
+        backMenu.setTitle(title, for: .normal)
+        backMenu.sizeToFit()
+        backMenu.contentHorizontalAlignment = .left
+        backMenu.tintColor = .black
+        backMenu.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        backMenu.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
+        backMenu.setTitleColor(.black, for: .normal)
+       // backMenu.titleLabel?.font = YPConfig.fonts.leftBarButtonFont
+        backMenu.titleLabel!.textColor = .black
+        backMenu.addTarget(self, action: #selector (backAlertButtonClick), for: .touchUpInside)
+        let barButton = UIBarButtonItem(customView: backMenu)
+        self.navigationItem.leftBarButtonItem = barButton
+        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.compact)
+    }
+    
+ 
+
+    @objc func backAlertButtonClick(){
+        let alert = UIAlertController(title: "Discard changes", message: "You will loose all the edits performed", preferredStyle: .actionSheet)
+          alert.addAction(UIAlertAction(title: "Discard", style: .destructive , handler:{ (UIAlertAction)in
+            self.dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true);
+          }))
+          
+          alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler:{ (UIAlertAction)in
+            self.dismiss(animated: true, completion: nil)
+          }))
+          self.present(alert, animated: true, completion: {
+              print("completion block")
+          })
+    }
+
 }

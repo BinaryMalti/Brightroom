@@ -27,7 +27,7 @@ public struct ClassicImageEditStyle {
 
   public struct Control {
 
-    public var backgroundColor = UIColor(white: 0.98, alpha: 1)
+    public var backgroundColor = UIColor(white: 1, alpha: 1)
 
     public init() {
 
