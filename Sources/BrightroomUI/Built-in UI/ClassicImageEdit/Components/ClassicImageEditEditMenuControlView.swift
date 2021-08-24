@@ -90,7 +90,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
     public lazy var exposureButton: ButtonView = {
         let button = ButtonView(
             name: viewModel.localizedStrings.editBrightness,
-            image: UIImage(named: "brightness", in: bundle, compatibleWith: nil)!
+            image: UIImage(named: "ic_brightness_lg", in: bundle, compatibleWith: nil)!
         )
         button.addTarget(self, action: #selector(brightness), for: .touchUpInside)
         return button
@@ -108,7 +108,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
     public lazy var contrastButton: ButtonView = {
         let button = ButtonView(
             name: viewModel.localizedStrings.editContrast,
-            image: UIImage(named: "contrast", in: bundle, compatibleWith: nil)!
+            image: UIImage(named: "ic_contrast_lg", in: bundle, compatibleWith: nil)!
         )
         button.addTarget(self, action: #selector(contrast), for: .touchUpInside)
         return button
@@ -117,7 +117,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
     public lazy var temperatureButton: ButtonView = {
         let button = ButtonView(
             name: viewModel.localizedStrings.editTemperature,
-            image: UIImage(named: "temperature", in: bundle, compatibleWith: nil)!
+            image: UIImage(named: "ic_temp_lg", in: bundle, compatibleWith: nil)!
         )
         button.addTarget(self, action: #selector(warmth), for: .touchUpInside)
         return button
@@ -126,7 +126,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
     public lazy var saturationButton: ButtonView = {
         let button = ButtonView(
             name: viewModel.localizedStrings.editSaturation,
-            image: UIImage(named: "saturation", in: bundle, compatibleWith: nil)!
+            image: UIImage(named: "ic_saturation_lg", in: bundle, compatibleWith: nil)!
         )
         button.addTarget(self, action: #selector(saturation), for: .touchUpInside)
         return button
@@ -153,7 +153,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
     public lazy var vignetteButton: ButtonView = {
         let button = ButtonView(
             name: viewModel.localizedStrings.editVignette,
-            image: UIImage(named: "vignette", in: bundle, compatibleWith: nil)!
+            image: UIImage(named: "ic_vignette_lg", in: bundle, compatibleWith: nil)!
         )
         button.addTarget(self, action: #selector(vignette), for: .touchUpInside)
         return button
@@ -349,7 +349,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
         if indexPath.row == 0, isFirstime {
             isFirstime = false
             selectedCell = cell
-            cell.imageView.image = UIImage(named: "ic_brightness_sm")
+            cell.imageView.image = UIImage(named: "ic_brightness_lg")
             cell.nameLabel.text = editOptionsArray[indexPath.row].name
             brightness()
         } else {

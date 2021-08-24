@@ -186,7 +186,7 @@ open class ClassicImageEditViewController: UIViewController, UIScrollViewDelegat
     cancelBtn.frame = CGRect(x: 0, y: 0, width: 42, height: 42)
     doneBtn.frame = cancelBtn.frame
     cancelBtn.setBackgroundImage(UIImage(named: "ic_close_red")!, for: .normal)
-    doneBtn.setBackgroundImage(UIImage(named: "ic_close_red")!, for: .normal)
+    doneBtn.setBackgroundImage(UIImage(named: "ic_Save")!, for: .normal)
     cropView.setCropInsideOverlay(nil)
     cropView.isGuideInteractionEnabled = false
     cropView.isAutoApplyEditingStackEnabled = false
