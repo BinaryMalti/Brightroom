@@ -188,12 +188,12 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
     var isFirstime = true
 
     func loadEditOptions(){
-        editOptionsArray.append(EditOptions(name: "Brightness", image: UIImage(named: "ic_close_red")!, type: 0))
-        editOptionsArray.append(EditOptions(name: "Warmth", image: UIImage(named: "ic_close_red")!, type: 1))
-        editOptionsArray.append(EditOptions(name: "Contrast", image: UIImage(named: "ic_close_red")!, type: 2))
-        editOptionsArray.append(EditOptions(name: "Hue", image: UIImage(named: "ic_close_red")!, type: 3))
-        editOptionsArray.append(EditOptions(name: "Saturation", image: UIImage(named: "ic_close_red")!, type: 4))
-        editOptionsArray.append(EditOptions(name: "Vignette", image: UIImage(named: "ic_close_red")!, type: 5))
+        editOptionsArray.append(EditOptions(name: "Brightness", image: UIImage(named: "ic_brightness_sm")!, type: 0))
+        editOptionsArray.append(EditOptions(name: "Warmth", image: UIImage(named: "ic_temp_sm")!, type: 1))
+        editOptionsArray.append(EditOptions(name: "Contrast", image: UIImage(named: "ic_contrast_sm")!, type: 2))
+        editOptionsArray.append(EditOptions(name: "Hue", image: UIImage(named: "ic_hue_sm")!, type: 3))
+        editOptionsArray.append(EditOptions(name: "Saturation", image: UIImage(named: "ic_saturation_sm")!, type: 4))
+        editOptionsArray.append(EditOptions(name: "Vignette", image: UIImage(named: "ic_vignette_sm")!, type: 5))
     }
 
     override open func setup() {
@@ -349,7 +349,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
         if indexPath.row == 0, isFirstime {
             isFirstime = false
             selectedCell = cell
-            cell.imageView.image = UIImage(named: "ic_close_red")
+            cell.imageView.image = UIImage(named: "ic_brightness_sm")
             cell.nameLabel.text = editOptionsArray[indexPath.row].name
             brightness()
         } else {
@@ -390,26 +390,26 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
        // horizontal.animateWithValueUpdate(0, duration: 2)
         switch type {
         case 0: //brightness
-            cell.imageView.image = UIImage(named: "ic_close_red")
+            cell.imageView.image = UIImage(named: "ic_brightness_lg")
             cell.nameLabel.text = editOptionsArray[index].name
             brightness()
         case 1://warmth
-            cell.imageView.image = UIImage(named: "ic_close_red")
+            cell.imageView.image = UIImage(named: "ic_temp_lg")
             cell.nameLabel.text = editOptionsArray[index].name
             warmth()
         case 2://contrast
-            cell.imageView.image = UIImage(named: "ic_close_red")
+            cell.imageView.image = UIImage(named: "ic_contrast_lg")
             cell.nameLabel.text = editOptionsArray[index].name
             contrast()
         case 3://hue
-            cell.imageView.image = UIImage(named: "ic_close_red")
+            cell.imageView.image = UIImage(named: "ic_hue_lg")
             cell.nameLabel.text = editOptionsArray[index].name
         case 4://saturation
-            cell.imageView.image = UIImage(named: "ic_close_red")
+            cell.imageView.image = UIImage(named: "ic_saturation_lg")
             cell.nameLabel.text = editOptionsArray[index].name
             saturation()
         case 5://vignette
-            cell.imageView.image = UIImage(named: "ic_close_red")
+            cell.imageView.image = UIImage(named: "ic_vignette_lg")
             cell.nameLabel.text = editOptionsArray[index].name
             vignette()
         default:
@@ -756,7 +756,7 @@ override init(frame: CGRect) {
         }
 
         body: do {
-            imageView.image = UIImage(named: "ic_brightness-sm")
+            imageView.image = UIImage(named: "ic_brightness_sm")
             nameLabel.text = ""
         }
 }
