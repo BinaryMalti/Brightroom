@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1805CE9426D6A6EC008CC706 /* ColorHighlightsControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1805CE8F26D6A6EB008CC706 /* ColorHighlightsControl.swift */; };
+		1805CE9526D6A6EC008CC706 /* ColorShadowsControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1805CE9026D6A6EB008CC706 /* ColorShadowsControl.swift */; };
+		1805CE9626D6A6EC008CC706 /* ColorControlViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1805CE9126D6A6EB008CC706 /* ColorControlViewBase.swift */; };
+		1805CE9726D6A6EC008CC706 /* ColorControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1805CE9226D6A6EC008CC706 /* ColorControlView.swift */; };
+		1805CE9826D6A6EC008CC706 /* ColorSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1805CE9326D6A6EC008CC706 /* ColorSelect.swift */; };
+		1805CE9A26D6A6FE008CC706 /* HorizontalDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1805CE9926D6A6FD008CC706 /* HorizontalDial.swift */; };
 		4B0077C021704E7F008330EA /* ClassicImageEditMaskControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0077BF21704E7F008330EA /* ClassicImageEditMaskControlView.swift */; };
 		4B01137E216FBA5C00CF09F6 /* SmoothPathDrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B01137D216FBA5C00CF09F6 /* SmoothPathDrawingView.swift */; };
 		4B011380216FBAA200CF09F6 /* BlurryMaskingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B01137F216FBAA200CF09F6 /* BlurryMaskingView.swift */; };
@@ -701,6 +707,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1805CE8F26D6A6EB008CC706 /* ColorHighlightsControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorHighlightsControl.swift; sourceTree = "<group>"; };
+		1805CE9026D6A6EB008CC706 /* ColorShadowsControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorShadowsControl.swift; sourceTree = "<group>"; };
+		1805CE9126D6A6EB008CC706 /* ColorControlViewBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorControlViewBase.swift; sourceTree = "<group>"; };
+		1805CE9226D6A6EC008CC706 /* ColorControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorControlView.swift; sourceTree = "<group>"; };
+		1805CE9326D6A6EC008CC706 /* ColorSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSelect.swift; sourceTree = "<group>"; };
+		1805CE9926D6A6FD008CC706 /* HorizontalDial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalDial.swift; sourceTree = "<group>"; };
 		2F7F4F6963C146CFC1C3704C /* Pods-Demo_Apps-SwiftUIDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo_Apps-SwiftUIDemo.release.xcconfig"; path = "Target Support Files/Pods-Demo_Apps-SwiftUIDemo/Pods-Demo_Apps-SwiftUIDemo.release.xcconfig"; sourceTree = "<group>"; };
 		4291E0400B97AA8933911505 /* Pods-Demo_Apps-SwiftUIDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo_Apps-SwiftUIDemo.debug.xcconfig"; path = "Target Support Files/Pods-Demo_Apps-SwiftUIDemo/Pods-Demo_Apps-SwiftUIDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		4B0077BD2170496E008330EA /* BlurredMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurredMask.swift; sourceTree = "<group>"; };
@@ -1865,6 +1877,12 @@
 		4BEEFF1B25E6827B008144EA /* ClassicImageEdit */ = {
 			isa = PBXGroup;
 			children = (
+				1805CE9926D6A6FD008CC706 /* HorizontalDial.swift */,
+				1805CE9226D6A6EC008CC706 /* ColorControlView.swift */,
+				1805CE9126D6A6EB008CC706 /* ColorControlViewBase.swift */,
+				1805CE8F26D6A6EB008CC706 /* ColorHighlightsControl.swift */,
+				1805CE9326D6A6EC008CC706 /* ColorSelect.swift */,
+				1805CE9026D6A6EB008CC706 /* ColorShadowsControl.swift */,
 				4B34578A217502F900716DA0 /* ClassicImageEditStyle.swift */,
 				4BA8E73C217C716700940518 /* ClassicImageEditOptions.swift */,
 				4B47D060216CC5480007B594 /* ClassicImageEditViewController.swift */,
@@ -3091,10 +3109,13 @@
 				4B0BDCA3217D676D001098B9 /* ClassicImageEditSharpenControl.swift in Sources */,
 				4BB917E525F518EF00C446B8 /* _ImageView.swift in Sources */,
 				4B01137E216FBA5C00CF09F6 /* SmoothPathDrawingView.swift in Sources */,
+				1805CE9626D6A6EC008CC706 /* ColorControlViewBase.swift in Sources */,
 				4B835DFD25E95D5000EC84D1 /* PhotosCropViewController.swift in Sources */,
 				4B9D4569216DD59D003A240A /* ClassicImageEditCropControl.swift in Sources */,
 				4B9D4567216DD40A003A240A /* BrightroomUI.swift in Sources */,
+				1805CE9726D6A6EC008CC706 /* ColorControlView.swift in Sources */,
 				4B42A6A72178DF7D00F18208 /* TempCode.swift in Sources */,
+				1805CE9826D6A6EC008CC706 /* ColorSelect.swift in Sources */,
 				4B42A6B12178E15600F18208 /* ClassicImageEditShadowsControl.swift in Sources */,
 				4B96DD8025EBCE8A000AAB1C /* Wrap.swift in Sources */,
 				4B1E9535217714A800E9DFB8 /* ClassicImageEditPresetListControl.swift in Sources */,
@@ -3107,6 +3128,7 @@
 				4B47D063216CC5480007B594 /* ClassicImageEditViewController.swift in Sources */,
 				4B34578B217502F900716DA0 /* ClassicImageEditStyle.swift in Sources */,
 				FCC7962623C58209009ACD8A /* LoadingBlurryOverlayView.swift in Sources */,
+				1805CE9426D6A6EC008CC706 /* ColorHighlightsControl.swift in Sources */,
 				4B2D73C425E8003400D5EE8C /* UIStateStore.swift in Sources */,
 				4B9D4575216DF66F003A240A /* ClassicImageEditNavigationView.swift in Sources */,
 				4BE9392F25E5501000F20341 /* ClassicImageEditViewModel.swift in Sources */,
@@ -3117,6 +3139,7 @@
 				4BA84F8425EE950900BAB430 /* CropView._CropScrollView.swift in Sources */,
 				4BA84F7E25EE94B700BAB430 /* CropView._InteractiveCropGuideView.swift in Sources */,
 				4B42A6AF2178E14E00F18208 /* ClassicImageEditHighlightsControl.swift in Sources */,
+				1805CE9526D6A6EC008CC706 /* ColorShadowsControl.swift in Sources */,
 				4B58DF662607100600D85F97 /* CanvasView.swift in Sources */,
 				4B1E951C21764DE700E9DFB8 /* ClassicImageEditGaussianBlurControl.swift in Sources */,
 				4BEC14BE2603ADDB009CE218 /* EditingCrop+.swift in Sources */,
@@ -3129,6 +3152,7 @@
 				4B011380216FBAA200CF09F6 /* BlurryMaskingView.swift in Sources */,
 				4B0BDC9F217D6567001098B9 /* ClassicImageEditFadeControl.swift in Sources */,
 				4B4023C025ED823B00D3DE47 /* CropView.swift in Sources */,
+				1805CE9A26D6A6FE008CC706 /* HorizontalDial.swift in Sources */,
 				4B42A6AD2178E14500F18208 /* ClassicImageEditVignetteControl.swift in Sources */,
 				4B9D457E216EE1AF003A240A /* ClassicImageEditDoodleControlView.swift in Sources */,
 				4BB917EC25F5193C00C446B8 /* MetalImageView.swift in Sources */,

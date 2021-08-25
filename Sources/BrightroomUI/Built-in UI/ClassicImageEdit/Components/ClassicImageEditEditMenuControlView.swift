@@ -404,6 +404,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
         case 3://hue
             cell.imageView.image = UIImage(named: "ic_hue_lg")
             cell.nameLabel.text = editOptionsArray[index].name
+            hue()
         case 4://saturation
             cell.imageView.image = UIImage(named: "ic_saturation_lg")
             cell.nameLabel.text = editOptionsArray[index].name
@@ -454,6 +455,14 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             viewModel.options.classes.control.contrastControl.init(viewModel: viewModel),
             animated: false, isSlider: true
         )
+    }
+    
+    @objc
+    private func hue() {
+//        push(
+//            viewModel.options.classes.control.colorControl.init(viewModel: viewModel),
+//            animated: false, isSlider: true
+//        )
     }
 
     @objc

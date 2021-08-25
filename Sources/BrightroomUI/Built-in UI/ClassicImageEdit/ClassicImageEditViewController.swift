@@ -30,7 +30,7 @@ import Verge
 @available(*, deprecated, renamed: "ClassicImageEditViewController")
 public typealias PixelEditViewController = ClassicImageEditViewController
 
-open class ClassicImageEditViewController: UIViewController, UIScrollViewDelegate {
+open class ClassicImageEditViewController: UIViewController {
 
   /**
    - TODO: property names are not comprehensibility.
