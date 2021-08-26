@@ -459,10 +459,10 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
     
     @objc
     private func hue() {
-//        push(
-//            viewModel.options.classes.control.colorControl.init(viewModel: viewModel),
-//            animated: false, isSlider: true
-//        )
+        push(
+            viewModel.options.classes.control.colorControl.init(viewModel: viewModel),
+            animated: false, isSlider: true
+        )
     }
 
     @objc

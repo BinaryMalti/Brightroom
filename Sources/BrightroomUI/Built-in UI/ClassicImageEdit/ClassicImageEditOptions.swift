@@ -63,7 +63,7 @@ extension ClassicImageEditOptions {
       public var fadeControl: ClassicImageEditFadeControlBase.Type = ClassicImageEditFadeControl.self
       public var clarityControl: ClassicImageEditClarityControlBase.Type = ClassicImageEditClarityControl.self
       public var sharpenControl: ClassicImageEditSharpenControlBase.Type = ClassicImageEditSharpenControl.self
-       // public var colorControl: ColorControlViewBase.Type = ColorControlView.self
+        public var colorControl: ColorControlViewBase.Type = ColorControlView.self
       
       public var ignoredEditMenu: [ClassicImageEditEditMenu] = []
       

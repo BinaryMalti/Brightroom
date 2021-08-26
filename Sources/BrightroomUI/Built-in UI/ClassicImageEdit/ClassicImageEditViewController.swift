@@ -346,7 +346,15 @@ open class ClassicImageEditViewController: UIViewController {
 
   @objc
   private func didTapCancelButton() {
-    handlers.didCancelEditing(self)
+    let alert = UIAlertController(title: "Discard Changes", message: "You cannot undo this action", preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+    alert.addAction(UIAlertAction(title: "Discard", style: .destructive, handler: { (action: UIAlertAction!) in
+        alert.dismiss(animated: true, completion: nil)
+        self.handlers.didCancelEditing(self)
+    }))
+    self.present(alert, animated: true, completion: nil)
   }
 
   private func updateUI(state: Changes<ClassicImageEditViewModel.State>) {

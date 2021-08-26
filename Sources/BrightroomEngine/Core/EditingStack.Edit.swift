@@ -69,7 +69,7 @@ extension EditingStack {
       public var contrast: FilterContrast?
       public var saturation: FilterSaturation?
       public var exposure: FilterExposure?
-      
+        public var color: FilterHighlightShadowTint?
       public var highlights: FilterHighlights?
       public var shadows: FilterShadows?
       
@@ -92,6 +92,7 @@ extension EditingStack {
           
           // Before
           exposure?.asAny(),
+            color?.asAny(),
           brightness?.asAny(),
           temperature?.asAny(),
           highlights?.asAny(),
