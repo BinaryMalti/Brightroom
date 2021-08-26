@@ -479,7 +479,7 @@ extension UIViewController {
         backMenu.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         backMenu.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
         backMenu.setTitleColor(.black, for: .normal)
-       // backMenu.titleLabel?.font = YPConfig.fonts.leftBarButtonFont
+        backMenu.titleLabel?.font = UIFont.systemFont(ofSize: 12.0)
         backMenu.titleLabel!.textColor = .black
         backMenu.addTarget(self, action: #selector (backAlertButtonClick), for: .touchUpInside)
         let barButton = UIBarButtonItem(customView: backMenu)

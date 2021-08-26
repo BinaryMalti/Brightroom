@@ -680,7 +680,6 @@ extension CropView {
   public func scrollViewDidZoom(_ scrollView: UIScrollView) {
     func adjustFrameToCenterOnZooming() {
       var frameToCenter = imageView.frame
-
       // center horizontally
       if frameToCenter.size.width < scrollView.bounds.width {
         frameToCenter.origin.x = (scrollView.bounds.width - frameToCenter.size.width) / 2

@@ -69,7 +69,7 @@ open class MetalImageView: MTKView, CIImageDisplaying, MTKViewDelegate {
     delegate = self
     enableSetNeedsDisplay = true
     autoResizeDrawable = true
-    contentMode = .scaleAspectFill
+    contentMode = .scaleAspectFit
     clearColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
     clearsContextBeforeDrawing = true
 
@@ -130,7 +130,7 @@ open class MetalImageView: MTKView, CIImageDisplaying, MTKViewDelegate {
 
     let fixedImage = image.removingExtentOffset()
 
-    let resolvedImage = downsample(image: fixedImage, bounds: bounds, contentMode: contentMode)
+    let resolvedImage = downsample(image: fixedImage, bounds: bounds, contentMode: .scaleAspectFit)
 
     let processedImage = postProcessing(resolvedImage)
 

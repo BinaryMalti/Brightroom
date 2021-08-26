@@ -324,7 +324,7 @@ open class ClassicImageEditPresetListControl: ClassicImageEditPresetListControlB
       super.init(frame: frame)
       
       layout: do {
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         
         contentView.addSubview(nameLabel)

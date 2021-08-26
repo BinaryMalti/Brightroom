@@ -41,7 +41,7 @@ open class ColorHighlightsControl : ColorHighlightsControlBase {
       NSLayoutConstraint.activate([
         colorButtons.rightAnchor.constraint(equalTo: colorButtons.superview!.rightAnchor),
         colorButtons.leftAnchor.constraint(equalTo: colorButtons.superview!.leftAnchor),
-        colorButtons.centerYAnchor.constraint(equalTo: colorButtons.superview!.centerYAnchor),
+        colorButtons.topAnchor.constraint(equalTo: colorButtons.superview!.topAnchor),
         colorButtons.heightAnchor.constraint(equalToConstant: 100)
         ])
       
