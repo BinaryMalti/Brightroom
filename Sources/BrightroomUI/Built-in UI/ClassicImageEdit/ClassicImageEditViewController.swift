@@ -240,10 +240,8 @@ open class ClassicImageEditViewController: UIViewController {
             c.priority = .defaultHigh
             return c
           }(),
-
           editContainerView.centerXAnchor.constraint(equalTo: guide.centerXAnchor),
           editContainerView.centerYAnchor.constraint(equalTo: guide.centerYAnchor),
-
           controlContainerView.topAnchor.constraint(equalTo: guide.bottomAnchor),
           controlContainerView.rightAnchor.constraint(equalTo: view.rightAnchor),
           controlContainerView.leftAnchor.constraint(equalTo: view.leftAnchor),

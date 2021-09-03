@@ -69,7 +69,7 @@ open class ClassicImageEditSaturationControl : ClassicImageEditSaturationControl
   }
     public func horizontalDialDidValueChanged(_ horizontalDial: HorizontalDial) {
         let degrees = horizontalDial.value
-        let radians = Int(degrees)
+        let radians = degrees * 0.01
         valueChanged(value: radians)
      
     }
@@ -80,7 +80,7 @@ open class ClassicImageEditSaturationControl : ClassicImageEditSaturationControl
   open override func didReceiveCurrentEdit(state: Changes<ClassicImageEditViewModel.State>)     {
     
     state.ifChanged(\.editingState.loadedState?.currentEdit.filters.saturation) { value in
-        ruler.value = Double(value?.value ?? 0)
+        ruler.value = Double(value?.value ?? 0)/0.01
            valueLabel.text = "\(Int(ruler.value))"
       //slider.set(value: value?.value ?? 0, in: FilterSaturation.range)
     }
@@ -88,7 +88,7 @@ open class ClassicImageEditSaturationControl : ClassicImageEditSaturationControl
   }
       
   @objc
-    private func valueChanged(value:Int) {
+    private func valueChanged(value:Double) {
     
    // let value = slider.transition(in: FilterSaturation.range  )
     
@@ -101,7 +101,7 @@ open class ClassicImageEditSaturationControl : ClassicImageEditSaturationControl
      
     viewModel.editingStack.set(filters: {
       var f = FilterSaturation()
-        f.value = Double(value)
+        f.value = value
       $0.saturation = f
     })
   }

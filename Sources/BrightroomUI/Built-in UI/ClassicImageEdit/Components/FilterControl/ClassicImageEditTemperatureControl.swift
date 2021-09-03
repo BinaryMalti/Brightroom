@@ -68,7 +68,7 @@ open class ClassicImageEditTemperatureControl : ClassicImageEditTemperatureContr
   }
     public func horizontalDialDidValueChanged(_ horizontalDial: HorizontalDial) {
         let degrees = horizontalDial.value
-        let radians = Int(degrees)
+        let radians = degrees * 30.0
         valueChanged(value: radians)
     }
     
@@ -78,15 +78,14 @@ open class ClassicImageEditTemperatureControl : ClassicImageEditTemperatureContr
   open override func didReceiveCurrentEdit(state: Changes<ClassicImageEditViewModel.State>) {
     
     state.ifChanged(\.editingState.loadedState?.currentEdit.filters.temperature) { value in
-        ruler.value = Double(value?.value ?? 0)
-           valueLabel.text = "\(Int(ruler.value))"
+        ruler.value = Double(value?.value ?? 0)/30.0
+        valueLabel.text = "\(Int(ruler.value))"
         //slider.set(value: value?.value ?? 0, in: FilterTemperature.range)
     }
-              
   }
   
   @objc
-    private func valueChanged(value:Int) {
+    private func valueChanged(value:Double) {
     
    // let value = slider.transition(in: FilterTemperature.range)
     
@@ -97,9 +96,16 @@ open class ClassicImageEditTemperatureControl : ClassicImageEditTemperatureContr
        
     viewModel.editingStack.set(filters: {
       var f = FilterTemperature()
-        f.value = Double(value)
+        f.value = value
       $0.temperature = f
     })
   }
   
+}
+extension Double {
+    /// Rounds the double to decimal places value
+    func rounded(toPlaces places:Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
+    }
 }

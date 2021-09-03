@@ -69,19 +69,19 @@ open override func setup() {
   }
 }
   public func horizontalDialDidValueChanged(_ horizontalDial: HorizontalDial) {
-      let degrees = horizontalDial.value
-      let radians = Int(degrees)
-      valueChanged(value: radians)
+    let degrees = horizontalDial.value
+    let radians = degrees * 0.018
+    valueChanged(value: radians)
   }
   
   public func horizontalDialDidEndScroll(_ horizontalDial: HorizontalDial) {
-
+  
   }
   
   open override func didReceiveCurrentEdit(state: Changes<ClassicImageEditViewModel.State>) {
     
     state.ifChanged(\.editingState.loadedState?.currentEdit.filters.exposure) { value in
-        ruler.value = Double(value?.value ?? 0)
+        ruler.value = Double(value?.value ?? 0) / 0.018
            valueLabel.text = "\(Int(ruler.value))"
         // slider.set(value: value?.value ?? 0, in: FilterExposure.range)
     }
@@ -89,7 +89,7 @@ open override func setup() {
   }
 
   @objc
-  private func valueChanged(value:Int) {
+  private func valueChanged(value:Double) {
 
    // let value = slider.transition(in: FilterExposure.range)
     guard value != 0 else {
@@ -101,7 +101,7 @@ open override func setup() {
         
     viewModel.editingStack.set(filters: {
       var f = FilterExposure()
-        f.value = Double(value)
+        f.value = value
       $0.exposure = f
     })
     

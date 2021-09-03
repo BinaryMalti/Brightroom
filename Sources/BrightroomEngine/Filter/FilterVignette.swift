@@ -23,7 +23,7 @@ import CoreImage
 
 public struct FilterVignette: Filtering, Equatable, Codable {
 
-  public static let range: ParameterRange<Double, FilterVignette> = .init(min: 0, max: 2)
+  public static let range: ParameterRange<Double, FilterVignette> = .init(min: 0, max: 1)
 
   public var value: Int = 0
 

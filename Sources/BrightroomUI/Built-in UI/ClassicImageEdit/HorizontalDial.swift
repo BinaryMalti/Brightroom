@@ -81,7 +81,7 @@ public final class HorizontalDial: UIControl {
     public var lock: Bool = false
     @IBOutlet public weak var delegate: AnyObject?
     
-    public var migneticOption: HorizontalDialMagneticOptions = .round
+    public var migneticOption: HorizontalDialMagneticOptions = .ceil
     public var animateOption: HorizontalDialAnimateOptions = .easeOutBack
     fileprivate(set) var animated: Bool = false
     

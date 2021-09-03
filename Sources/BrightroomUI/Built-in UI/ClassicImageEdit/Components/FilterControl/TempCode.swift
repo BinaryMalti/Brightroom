@@ -67,7 +67,7 @@ enum SliderCode {
         ruler.enableRange = true
         ruler.minimumValue = -100
         ruler.maximumValue = 100
-        ruler.tick = 1
+        ruler.tick = 10
         ruler.centerMarkColor = .black
         ruler.centerMarkWidth = 3
         ruler.centerMarkHeightRatio = 0.8
@@ -75,10 +75,11 @@ enum SliderCode {
         ruler.markColor = .gray
         label.text = "0"
         label.sizeToFit()
-        ruler.markCount = 30
+        ruler.markCount = 20
         ruler.padding = 20
         label.textAlignment = .center
         ruler.verticalAlign = "center"
+        ruler.animateOption = .easeInQuad
         ruler.translatesAutoresizingMaskIntoConstraints = false
         ruler.backgroundColor = .white
     ruler.translatesAutoresizingMaskIntoConstraints = false

@@ -68,7 +68,7 @@ open override func setup() {
 }
   public func horizontalDialDidValueChanged(_ horizontalDial: HorizontalDial) {
       let degrees = horizontalDial.value
-      let radians = Int(degrees)
+    let radians = degrees * 0.0018
       valueChanged(value: radians)
   }
   
@@ -78,7 +78,8 @@ open override func setup() {
   
   open override func didReceiveCurrentEdit(state: Changes<ClassicImageEditViewModel.State>)     {
 
-    state.ifChanged(\.editingState.loadedState?.currentEdit.filters.contrast) { value in   ruler.value = Double(value?.value ?? 0)
+    state.ifChanged(\.editingState.loadedState?.currentEdit.filters.contrast) { value in
+        ruler.value = Double(value?.value ?? 0)/0.0018
         valueLabel.text = "\(Int(ruler.value))"
       //slider.set(value: value?.value ?? 0, in: FilterContrast.range)
     }
@@ -86,7 +87,7 @@ open override func setup() {
   }
   
   @objc
-    private func valueChanged(value:Int) {
+    private func valueChanged(value:Double) {
         
     guard value != 0 else {
       viewModel.editingStack.set(filters: {
@@ -97,7 +98,7 @@ open override func setup() {
     
     viewModel.editingStack.set(filters: {
       var f = FilterContrast()
-        f.value = Double(value)
+        f.value = value
       $0.contrast = f
     })
   }
