@@ -162,6 +162,8 @@ open class ClassicImageEditViewController: UIViewController {
     cropView = .init(editingStack: viewModel.editingStack, contentInset: .zero)
     previewView = .init(editingStack: viewModel.editingStack)
     maskingView = .init(editingStack: viewModel.editingStack)
+    previewView.backgroundColor = .black
+    maskingView.backgroundColor = .black
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -180,7 +182,7 @@ open class ClassicImageEditViewController: UIViewController {
     self.addBackButton(title: "Arrange Artwork")
     cropView.setCropOutsideOverlay(
       .init()&>.do {
-        $0.backgroundColor = .white
+        $0.backgroundColor = .black
       }
     )
     cancelBtn.frame = CGRect(x: 0, y: 0, width: 42, height: 42)
@@ -197,7 +199,7 @@ open class ClassicImageEditViewController: UIViewController {
 
     layout: do {
       root: do {
-        view.backgroundColor = .white
+        view.backgroundColor = .black
 
         let guide = UILayoutGuide()
 
@@ -212,7 +214,7 @@ open class ClassicImageEditViewController: UIViewController {
         doneBtn.translatesAutoresizingMaskIntoConstraints = false
         editContainerView.translatesAutoresizingMaskIntoConstraints = false
         controlContainerView.translatesAutoresizingMaskIntoConstraints = false
-        controlContainerView.backgroundColor = .white
+        controlContainerView.backgroundColor = .black
         cancelBtn.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
         doneBtn.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
         NSLayoutConstraint.activate([
