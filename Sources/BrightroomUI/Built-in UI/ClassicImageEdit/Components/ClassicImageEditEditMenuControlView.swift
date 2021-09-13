@@ -191,7 +191,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
         editOptionsArray.append(EditOptions(name: "Brightness", image: UIImage(named: "ic_brightness_sm")!, type: 0))
         editOptionsArray.append(EditOptions(name: "Warmth", image: UIImage(named: "ic_temp_sm")!, type: 1))
         editOptionsArray.append(EditOptions(name: "Contrast", image: UIImage(named: "ic_contrast_sm")!, type: 2))
-        editOptionsArray.append(EditOptions(name: "Hue", image: UIImage(named: "ic_hue_sm")!, type: 3))
+      //  editOptionsArray.append(EditOptions(name: "Hue", image: UIImage(named: "ic_hue_sm")!, type: 3))
         editOptionsArray.append(EditOptions(name: "Saturation", image: UIImage(named: "ic_saturation_sm")!, type: 4))
         editOptionsArray.append(EditOptions(name: "Vignette", image: UIImage(named: "ic_vignette_sm")!, type: 5))
     }
