@@ -57,17 +57,65 @@ enum TempCode {
 
 enum SliderCode {
   
-    static func layout(label:UILabel,ruler: HorizontalDial, in view: UIView) {
+    static func layout(label:UILabel,ruler: HorizontalDial, in view: UIView, forVignette:Bool) {
     
     let containerGuide = UILayoutGuide()
     view.addLayoutGuide(containerGuide)
     view.addSubview(label)
     view.addSubview(ruler)
     view.backgroundColor = .white
+  
+        ruler.translatesAutoresizingMaskIntoConstraints = false
+        ruler.backgroundColor = .white
+    ruler.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
+        if forVignette{
+            NSLayoutConstraint.activate([
+              
+              containerGuide.topAnchor.constraint(equalTo: ruler.superview!.topAnchor,constant: 0),
+              containerGuide.rightAnchor.constraint(equalTo: ruler.superview!.rightAnchor, constant: -44),
+              containerGuide.leftAnchor.constraint(equalTo: ruler.superview!.leftAnchor, constant: 44),
+                
+                label.rightAnchor.constraint(equalTo: view.rightAnchor),
+                label.leftAnchor.constraint(equalTo: view.leftAnchor),
+                label.topAnchor.constraint(equalTo: containerGuide.topAnchor,constant: 2),
+                label.bottomAnchor.constraint(equalTo: ruler.topAnchor,constant: 2),
+              ruler.topAnchor.constraint(equalTo: label.bottomAnchor),
+              ruler.rightAnchor.constraint(equalTo: containerGuide.rightAnchor,constant: 150),
+              ruler.leftAnchor.constraint(equalTo: containerGuide.leftAnchor,constant: -150),
+              ruler.bottomAnchor.constraint(lessThanOrEqualTo: containerGuide.bottomAnchor),
+              ruler.centerYAnchor.constraint(equalTo: containerGuide.centerYAnchor),
+              ruler.heightAnchor.constraint(equalToConstant: 60),
+
+              ])
+        }else{
+    NSLayoutConstraint.activate([
+      
+      containerGuide.topAnchor.constraint(equalTo: ruler.superview!.topAnchor,constant: 0),
+      containerGuide.rightAnchor.constraint(equalTo: ruler.superview!.rightAnchor, constant: -44),
+      containerGuide.leftAnchor.constraint(equalTo: ruler.superview!.leftAnchor, constant: 44),
+        label.rightAnchor.constraint(equalTo: view.rightAnchor),
+        label.leftAnchor.constraint(equalTo: view.leftAnchor),
+        label.topAnchor.constraint(equalTo: containerGuide.topAnchor,constant: 2),
+        label.bottomAnchor.constraint(equalTo: ruler.topAnchor,constant: 2),
+      
+      ruler.topAnchor.constraint(equalTo: label.bottomAnchor),
+      ruler.rightAnchor.constraint(equalTo: containerGuide.rightAnchor,constant: 300),
+      ruler.leftAnchor.constraint(equalTo: containerGuide.leftAnchor,constant: -300),
+      ruler.bottomAnchor.constraint(lessThanOrEqualTo: containerGuide.bottomAnchor),
+      ruler.centerYAnchor.constraint(equalTo: containerGuide.centerYAnchor),
+      ruler.heightAnchor.constraint(equalToConstant: 60),
+      ])
+        }
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+        view.needsUpdateConstraints()
+        view.setNeedsDisplay()
+        view.layoutSubviews()
         ruler.enableRange = true
         ruler.minimumValue = -100
         ruler.maximumValue = 100
-        ruler.tick = 10
+        ruler.tick = 1.0
         ruler.centerMarkColor = .black
         ruler.centerMarkWidth = 3
         ruler.centerMarkHeightRatio = 0.8
@@ -75,34 +123,13 @@ enum SliderCode {
         ruler.markColor = .gray
         label.text = "0"
         label.sizeToFit()
-        ruler.markCount = 20
+        ruler.markCount = 200
         ruler.padding = 20
         label.textAlignment = .center
         ruler.verticalAlign = "center"
         ruler.animateOption = .easeInQuad
-        ruler.translatesAutoresizingMaskIntoConstraints = false
-        ruler.backgroundColor = .white
-    ruler.translatesAutoresizingMaskIntoConstraints = false
-        label.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      
-      containerGuide.topAnchor.constraint(equalTo: ruler.superview!.topAnchor,constant: 0),
-      containerGuide.rightAnchor.constraint(equalTo: ruler.superview!.rightAnchor, constant: -44),
-      containerGuide.leftAnchor.constraint(equalTo: ruler.superview!.leftAnchor, constant: 44),
-        
-        label.rightAnchor.constraint(equalTo: view.rightAnchor),
-        label.leftAnchor.constraint(equalTo: view.leftAnchor),
-        label.topAnchor.constraint(equalTo: containerGuide.topAnchor,constant: 2),
-        label.bottomAnchor.constraint(equalTo: ruler.topAnchor,constant: 2),
-      
-      ruler.topAnchor.constraint(equalTo: label.bottomAnchor),
-      ruler.rightAnchor.constraint(equalTo: containerGuide.rightAnchor),
-      ruler.leftAnchor.constraint(equalTo: containerGuide.leftAnchor),
-      ruler.bottomAnchor.constraint(lessThanOrEqualTo: containerGuide.bottomAnchor),
-      ruler.centerYAnchor.constraint(equalTo: containerGuide.centerYAnchor),
-      ruler.heightAnchor.constraint(equalToConstant: 60),
-
-      ])
+        ruler.sendActions(for: .touchUpInside)
+        ruler.animateWithValueUpdate(0, duration: 0.5)
 
   }
 }

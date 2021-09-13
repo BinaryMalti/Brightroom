@@ -49,8 +49,12 @@ open class ClassicImageEditVignetteControl : ClassicImageEditVignetteControlBase
     
     backgroundColor = ClassicImageEditStyle.default.control.backgroundColor
     backgroundColor = .white
-    SliderCode.layout(label: valueLabel, ruler: ruler, in: self)
+    SliderCode.layout(label: valueLabel, ruler: ruler, in: self, forVignette: true)
     ruler.delegate = self
+    ruler.maximumValue = 50
+    ruler.minimumValue = -50
+    ruler.markCount = 100
+    ruler.tick = 1.0
     navigationView.didTapCancelButton = { [weak self] in
       
       guard let self = self else { return }
@@ -69,7 +73,7 @@ open class ClassicImageEditVignetteControl : ClassicImageEditVignetteControlBase
   }
     public func horizontalDialDidValueChanged(_ horizontalDial: HorizontalDial) {
         let degrees = horizontalDial.value
-        let radians = Int(degrees)
+        let radians = degrees * 0.06
         valueChanged(val: radians)
     }
     
@@ -81,19 +85,18 @@ open class ClassicImageEditVignetteControl : ClassicImageEditVignetteControlBase
   open override func didReceiveCurrentEdit(state: Changes<ClassicImageEditViewModel.State>) {
     
     state.ifChanged(\.editingState.loadedState?.currentEdit.filters.vignette) { value in
-        ruler.value = Double(value?.value ?? 0)
+        ruler.value = Double(value?.value ?? 0)/0.06
         valueLabel.text = "\(Int(ruler.value))"
       //slider.set(value: value?.value ?? 0, in: FilterVignette.range)
     }
   }
   
   @objc
-    private func valueChanged(val:Int) {
-    valueLabel.text = "\(val)"
-    let value = val
+    private func valueChanged(val:Double) {
+   // let value = val
     //transition(in: FilterVignette.range)
     
-    guard value != 0 else {
+    guard val != 0 else {
       viewModel.editingStack.set(filters: { $0.vignette = nil })
       return
     }

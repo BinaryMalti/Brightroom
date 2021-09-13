@@ -48,7 +48,7 @@ open override func setup() {
   
   backgroundColor = ClassicImageEditStyle.default.control.backgroundColor
   backgroundColor = .white
-  SliderCode.layout(label: valueLabel, ruler: ruler, in: self)
+    SliderCode.layout(label: valueLabel, ruler: ruler, in: self, forVignette: false)
   ruler.delegate = self
   navigationView.didTapCancelButton = { [weak self] in
     

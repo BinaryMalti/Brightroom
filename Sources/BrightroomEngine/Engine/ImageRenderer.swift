@@ -170,14 +170,14 @@ public final class ImageRenderer {
    */
   private func renderOnlyCropping(options: Options = .init()) throws -> Rendered {
 
-    EngineLog.debug(.renderer, "Start render in using CoreGraphics")
+    // EngineLog.debug(.renderer, "Start render in using CoreGraphics")
 
     /*
      ===
      ===
      ===
      */
-    EngineLog.debug(.renderer, "Load full resolution CGImage from ImageSource.")
+    // EngineLog.debug(.renderer, "Load full resolution CGImage from ImageSource.")
 
     let sourceCGImage: CGImage = source.loadOriginalCGImage()
 
@@ -186,7 +186,7 @@ public final class ImageRenderer {
      ===
      ===
      */
-    EngineLog.debug(
+     EngineLog.debug(
       .renderer,
       "Fixing colorspace \(sourceCGImage.colorSpace?.name as NSString? ?? "") -> \(options.workingColorSpace.name as NSString? ?? "")"
     )
@@ -200,7 +200,7 @@ public final class ImageRenderer {
      ===
      ===
      */
-    EngineLog.debug(.renderer, "Fix orientation")
+    // EngineLog.debug(.renderer, "Fix orientation")
 
     let orientedImage = try fixedColorspace.oriented(orientation)
 
@@ -211,7 +211,7 @@ public final class ImageRenderer {
      */
     // TODO: Better management of orientation
     let crop = edit.croppingRect ?? .init(imageSize: source.readImageSize().applying(cgOrientation: orientation))
-    EngineLog.debug(.renderer, "Crop CGImage with extent \(crop)")
+    // EngineLog.debug(.renderer, "Crop CGImage with extent \(crop)")
 
     let croppedImage = try orientedImage.croppedWithColorspace(to: crop.cropExtent)
 
@@ -220,7 +220,7 @@ public final class ImageRenderer {
      ===
      ===
      */
-    EngineLog.debug(.renderer, "Resize if needed")
+    // EngineLog.debug(.renderer, "Resize if needed")
 
 
     let resizedImage: CGImage
@@ -237,7 +237,7 @@ public final class ImageRenderer {
      ===
      ===
      */
-    EngineLog.debug(.renderer, "Rotation")
+    // EngineLog.debug(.renderer, "Rotation")
 
     let rotatedImage = try resizedImage.rotated(rotation: crop.rotation)
 
@@ -263,18 +263,18 @@ public final class ImageRenderer {
 
     let startTime = CACurrentMediaTime()
 
-    EngineLog.debug(.renderer, "Start render in v2 using CIContext => \(ciContext)")
+    // EngineLog.debug(.renderer, "Start render in v2 using CIContext => \(ciContext)")
 
     /*
      ===
      ===
      ===
      */
-    EngineLog.debug(.renderer, "Take full resolution CIImage from ImageSource.")
+    // EngineLog.debug(.renderer, "Take full resolution CIImage from ImageSource.")
 
     let sourceCIImage: CIImage = source.makeOriginalCIImage().oriented(orientation)
 
-    EngineLog.debug(.renderer, "Input oriented CIImage => \(sourceCIImage)")
+    // EngineLog.debug(.renderer, "Input oriented CIImage => \(sourceCIImage)")
 
     assert(
       {
@@ -288,7 +288,7 @@ public final class ImageRenderer {
      ===
      ===
      */
-    EngineLog.debug(.renderer, "Applies Effect")
+    // EngineLog.debug(.renderer, "Applies Effect")
 
     let effected_CIImage = edit.modifiers.reduce(sourceCIImage) { image, modifier in
       modifier.apply(to: image, sourceImage: sourceCIImage)
@@ -299,7 +299,7 @@ public final class ImageRenderer {
      ===
      ===
      */
-    EngineLog.debug(.renderer, "Applies Crop to effected image")
+    // EngineLog.debug(.renderer, "Applies Crop to effected image")
 
     // TODO: Better management of orientation
     let crop = edit.croppingRect ?? .init(imageSize: source.readImageSize().applying(cgOrientation: orientation))
@@ -313,7 +313,7 @@ public final class ImageRenderer {
      ===
      ===
      */
-    EngineLog.debug(.renderer, "Creates CGImage from crop applied CIImage.")
+    // EngineLog.debug(.renderer, "Creates CGImage from crop applied CIImage.")
 
     /**
      To keep wide-color(DisplayP3), use createCGImage instead drawing with CIContext
@@ -326,7 +326,7 @@ public final class ImageRenderer {
       deferred: false
     )!
 
-    EngineLog.debug(.renderer, "Created effected CGImage => \(cropped_effected_CGImage)")
+    // EngineLog.debug(.renderer, "Created effected CGImage => \(cropped_effected_CGImage)")
 
     /*
      ===
@@ -337,11 +337,11 @@ public final class ImageRenderer {
     let drawings_CGImage: CGImage
 
     if edit.drawer.isEmpty {
-      EngineLog.debug(.renderer, "No drawings")
+      // // EngineLog.debug(.renderer, "No drawings")
 
       drawings_CGImage = cropped_effected_CGImage
     } else {
-      EngineLog.debug(.renderer, "Found drawings")
+      // EngineLog.debug(.renderer, "Found drawings")
       /**
        Render drawings
        */
@@ -373,13 +373,13 @@ public final class ImageRenderer {
     switch options.resolution {
     case .full:
 
-      EngineLog.debug(.renderer, "No resizing")
+      // EngineLog.debug(.renderer, "No resizing")
 
       resizedImage = drawings_CGImage
 
     case let .resize(maxPixelSize):
 
-      EngineLog.debug(.renderer, "Resizing with maxPixelSize: \(maxPixelSize)")
+      // EngineLog.debug(.renderer, "Resizing with maxPixelSize: \(maxPixelSize)")
 
       resizedImage = try drawings_CGImage.resized(maxPixelSize: maxPixelSize)
 
@@ -391,12 +391,12 @@ public final class ImageRenderer {
      ===
      */
 
-    EngineLog.debug(.renderer, "Rotates image if needed")
+    // EngineLog.debug(.renderer, "Rotates image if needed")
 
     let rotatedImage = try resizedImage.rotated(rotation: crop.rotation)
 
     let duration = CACurrentMediaTime() - startTime
-    EngineLog.debug(.renderer, "Rendering has completed - took \(duration * 1000)ms")
+    // EngineLog.debug(.renderer, "Rendering has completed - took \(duration * 1000)ms")
 
     return .init(cgImage: rotatedImage, options: options, engine: .combined)
 
