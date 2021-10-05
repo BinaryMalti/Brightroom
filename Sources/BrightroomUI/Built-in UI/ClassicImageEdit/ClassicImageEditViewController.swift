@@ -500,12 +500,8 @@ extension UIViewController {
             self.navigationController?.popViewController(animated: true);
           }))
           
-          alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:{ (UIAlertAction)in
-            self.dismiss(animated: true, completion: nil)
-          }))
-          self.present(alert, animated: true, completion: {
-              print("completion block")
-          })
+          alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+          self.present(alert, animated: true, completion: nil)
     }
 
 }
