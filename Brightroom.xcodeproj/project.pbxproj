@@ -13,6 +13,7 @@
 		1805CE9726D6A6EC008CC706 /* ColorControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1805CE9226D6A6EC008CC706 /* ColorControlView.swift */; };
 		1805CE9826D6A6EC008CC706 /* ColorSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1805CE9326D6A6EC008CC706 /* ColorSelect.swift */; };
 		1805CE9A26D6A6FE008CC706 /* HorizontalDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1805CE9926D6A6FD008CC706 /* HorizontalDial.swift */; };
+		18858FF5270C528E00EB3291 /* BarlowCondensed-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18858FF4270C528E00EB3291 /* BarlowCondensed-Light.ttf */; };
 		4B0077C021704E7F008330EA /* ClassicImageEditMaskControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0077BF21704E7F008330EA /* ClassicImageEditMaskControlView.swift */; };
 		4B01137E216FBA5C00CF09F6 /* SmoothPathDrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B01137D216FBA5C00CF09F6 /* SmoothPathDrawingView.swift */; };
 		4B011380216FBAA200CF09F6 /* BlurryMaskingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B01137F216FBAA200CF09F6 /* BlurryMaskingView.swift */; };
@@ -713,6 +714,7 @@
 		1805CE9226D6A6EC008CC706 /* ColorControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorControlView.swift; sourceTree = "<group>"; };
 		1805CE9326D6A6EC008CC706 /* ColorSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSelect.swift; sourceTree = "<group>"; };
 		1805CE9926D6A6FD008CC706 /* HorizontalDial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalDial.swift; sourceTree = "<group>"; };
+		18858FF4270C528E00EB3291 /* BarlowCondensed-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BarlowCondensed-Light.ttf"; sourceTree = "<group>"; };
 		2F7F4F6963C146CFC1C3704C /* Pods-Demo_Apps-SwiftUIDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo_Apps-SwiftUIDemo.release.xcconfig"; path = "Target Support Files/Pods-Demo_Apps-SwiftUIDemo/Pods-Demo_Apps-SwiftUIDemo.release.xcconfig"; sourceTree = "<group>"; };
 		4291E0400B97AA8933911505 /* Pods-Demo_Apps-SwiftUIDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo_Apps-SwiftUIDemo.debug.xcconfig"; path = "Target Support Files/Pods-Demo_Apps-SwiftUIDemo/Pods-Demo_Apps-SwiftUIDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		4B0077BD2170496E008330EA /* BlurredMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurredMask.swift; sourceTree = "<group>"; };
@@ -1364,6 +1366,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18858FF3270C527100EB3291 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				18858FF4270C528E00EB3291 /* BarlowCondensed-Light.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		4B1E94B4217632B300E9DFB8 /* Filter */ = {
 			isa = PBXGroup;
 			children = (
@@ -1538,6 +1548,7 @@
 		4B47D053216CC5350007B594 /* BrightroomUI */ = {
 			isa = PBXGroup;
 			children = (
+				18858FF3270C527100EB3291 /* Fonts */,
 				4B47D054216CC5350007B594 /* BrightroomUI.h */,
 				4B47D055216CC5350007B594 /* Info.plist */,
 				4B9D4570216DF1A1003A240A /* Media.xcassets */,
@@ -2525,6 +2536,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18858FF5270C528E00EB3291 /* BarlowCondensed-Light.ttf in Resources */,
 				4B9D4571216DF1A1003A240A /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

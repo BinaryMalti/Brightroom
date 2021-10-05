@@ -67,7 +67,7 @@ final class ClassicImageEditControlStackView : UIView {
     
     addSubview(view)
         if isSlider {
-            view.frame = CGRect(x: 0, y: 130, width: bounds.width, height: bounds.height)
+          view.frame = CGRect(x: 0, y: bounds.height/2, width: bounds.width, height: bounds.height)
 
         }else{
             view.frame = bounds

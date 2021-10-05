@@ -346,7 +346,7 @@ open class ClassicImageEditViewController: UIViewController {
 
   @objc
   private func didTapCancelButton() {
-    let alert = UIAlertController(title: "Discard Changes", message: "You cannot undo this action", preferredStyle: .alert)
+    let alert = UIAlertController(title: "", message: "If you go back, your changes will be discarded.", preferredStyle: .actionSheet)
     alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
@@ -479,7 +479,7 @@ extension UIViewController {
         backMenu.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         backMenu.titleEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
         backMenu.setTitleColor(.black, for: .normal)
-        backMenu.titleLabel?.font = UIFont.systemFont(ofSize: 12.0)
+      backMenu.titleLabel?.font = UIFont(name: "BarlowCondensed-Light", size: 18)
         backMenu.titleLabel!.textColor = .black
         backMenu.addTarget(self, action: #selector (backAlertButtonClick), for: .touchUpInside)
         let barButton = UIBarButtonItem(customView: backMenu)
@@ -494,13 +494,13 @@ extension UIViewController {
  
 
     @objc func backAlertButtonClick(){
-        let alert = UIAlertController(title: "Discard changes", message: "You will loose all the edits performed", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "", message: "If you go back, your changes will be discarded.", preferredStyle: .actionSheet)
           alert.addAction(UIAlertAction(title: "Discard", style: .destructive , handler:{ (UIAlertAction)in
             self.dismiss(animated: true, completion: nil)
             self.navigationController?.popViewController(animated: true);
           }))
           
-          alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler:{ (UIAlertAction)in
+          alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:{ (UIAlertAction)in
             self.dismiss(animated: true, completion: nil)
           }))
           self.present(alert, animated: true, completion: {

@@ -221,7 +221,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             collectionView.translatesAutoresizingMaskIntoConstraints = false
     
             NSLayoutConstraint.activate([
-                collectionView.topAnchor.constraint(equalTo: collectionView.superview!.topAnchor),
+                collectionView.bottomAnchor.constraint(equalTo: collectionView.superview!.centerYAnchor),
                 collectionView.rightAnchor.constraint(equalTo: collectionView.superview!.rightAnchor),
                 collectionView.leftAnchor.constraint(equalTo: collectionView.superview!.leftAnchor),
                 collectionView.heightAnchor.constraint(equalToConstant: 120),
