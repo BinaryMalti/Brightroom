@@ -163,7 +163,7 @@ open class ClassicImageEditViewController: UIViewController {
     previewView = .init(editingStack: viewModel.editingStack)
     maskingView = .init(editingStack: viewModel.editingStack)
     previewView.backgroundColor = .black
-    maskingView.backgroundColor = .black
+    maskingView.backgroundColor = .clear
     super.init(nibName: nil, bundle: nil)
   }
 

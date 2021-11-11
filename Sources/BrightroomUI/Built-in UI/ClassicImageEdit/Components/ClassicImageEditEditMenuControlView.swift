@@ -66,6 +66,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
     let flowLayout = ZoomAndSnapFlowLayout()
     var indexPathArray: [IndexPath] = []
     var editOptionsArray : [EditOptions] = []
+    var currentType: Int = 0
 
     public var collectionView = UICollectionView(frame: .zero, collectionViewLayout: ZoomAndSnapFlowLayout())
 
@@ -74,7 +75,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             name: viewModel.localizedStrings.editAdjustment,
             image: UIImage(named: "adjustment", in: bundle, compatibleWith: nil)!
         )
-        button.addTarget(self, action: #selector(adjustment), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(adjustment), for: .touchUpInside)
         return button
     }()
 
@@ -83,7 +84,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             name: viewModel.localizedStrings.editMask,
             image: UIImage(named: "mask", in: bundle, compatibleWith: nil)!
         )
-        button.addTarget(self, action: #selector(masking), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(masking), for: .touchUpInside)
         return button
     }()
 
@@ -92,7 +93,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             name: viewModel.localizedStrings.editBrightness,
             image: UIImage(named: "ic_brightness_lg", in: bundle, compatibleWith: nil)!
         )
-        button.addTarget(self, action: #selector(brightness), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(brightness), for: .touchUpInside)
         return button
     }()
 
@@ -101,7 +102,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             name: viewModel.localizedStrings.editBlur,
             image: UIImage(named: "blur", in: bundle, compatibleWith: nil)!
         )
-        button.addTarget(self, action: #selector(blur), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(blur), for: .touchUpInside)
         return button
     }()
 
@@ -110,7 +111,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             name: viewModel.localizedStrings.editContrast,
             image: UIImage(named: "ic_contrast_lg", in: bundle, compatibleWith: nil)!
         )
-        button.addTarget(self, action: #selector(contrast), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(contrast), for: .touchUpInside)
         return button
     }()
 
@@ -119,7 +120,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             name: viewModel.localizedStrings.editTemperature,
             image: UIImage(named: "ic_temp_lg", in: bundle, compatibleWith: nil)!
         )
-        button.addTarget(self, action: #selector(warmth), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(warmth), for: .touchUpInside)
         return button
     }()
 
@@ -128,7 +129,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             name: viewModel.localizedStrings.editSaturation,
             image: UIImage(named: "ic_saturation_lg", in: bundle, compatibleWith: nil)!
         )
-        button.addTarget(self, action: #selector(saturation), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(saturation), for: .touchUpInside)
         return button
     }()
 
@@ -137,7 +138,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             name: viewModel.localizedStrings.editHighlights,
             image: UIImage(named: "highlights", in: bundle, compatibleWith: nil)!
         )
-        button.addTarget(self, action: #selector(highlights), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(highlights), for: .touchUpInside)
         return button
     }()
 
@@ -146,7 +147,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             name: viewModel.localizedStrings.editShadows,
             image: UIImage(named: "shadows", in: bundle, compatibleWith: nil)!
         )
-        button.addTarget(self, action: #selector(shadows), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(shadows), for: .touchUpInside)
         return button
     }()
 
@@ -155,7 +156,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             name: viewModel.localizedStrings.editVignette,
             image: UIImage(named: "ic_vignette_lg", in: bundle, compatibleWith: nil)!
         )
-        button.addTarget(self, action: #selector(vignette), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(vignette), for: .touchUpInside)
         return button
     }()
 
@@ -164,7 +165,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             name: viewModel.localizedStrings.editFade,
             image: UIImage(named: "fade", in: bundle, compatibleWith: nil)!
         )
-        button.addTarget(self, action: #selector(fade), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(fade), for: .touchUpInside)
         return button
     }()
 
@@ -173,7 +174,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             name: viewModel.localizedStrings.editSharpen,
             image: UIImage(named: "sharpen", in: bundle, compatibleWith: nil)!
         )
-        button.addTarget(self, action: #selector(sharpen), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(sharpen), for: .touchUpInside)
         return button
     }()
 
@@ -182,7 +183,7 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
             name: viewModel.localizedStrings.editClarity,
             image: UIImage(named: "structure", in: bundle, compatibleWith: nil)!
         )
-        button.addTarget(self, action: #selector(clarity), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(clarity), for: .touchUpInside)
         return button
     }()
     var isFirstime = true
@@ -374,7 +375,11 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
                         if let cell: CollectionViewCell = collectionView.cellForItem(at: index) as? CollectionViewCell
                         {
                             if indexPathh == index {
-                                isIndex(type: editOptionsArray[index.row].type, cell: cell, index: index.row)
+                                if  pushNextFilter(type: editOptionsArray[index.row].type) {
+                                  viewModel.editingStack.takeSnapshot()
+                                  pop(animated: true)
+                                  isIndex(type: editOptionsArray[index.row].type, cell: cell, index: index.row)
+                                }
                             }else{
                                 cell.imageView.image = editOptionsArray[index.row].image
                                 cell.nameLabel.text = ""
@@ -382,6 +387,15 @@ open class EditMenuControl: ClassicImageEditEditMenuControlBase, UICollectionVie
                         }
                     }
                 }
+    }
+    
+    func pushNextFilter(type: Int) -> Bool {
+      if currentType != type {
+        currentType = type
+        return true
+      } else {
+        return false
+      }
     }
     
     var selectedCell : CollectionViewCell?
