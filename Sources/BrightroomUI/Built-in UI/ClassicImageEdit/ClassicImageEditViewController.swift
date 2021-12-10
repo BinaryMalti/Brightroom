@@ -284,8 +284,8 @@ open class ClassicImageEditViewController: UIViewController {
         controlContainerView.addSubview(stackView)
         stackView.frame = stackView.bounds
         stackView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        stackView.addSubview(cancelBtn)
-        stackView.addSubview(doneBtn)
+        view.addSubview(cancelBtn)
+        view.addSubview(doneBtn)
         NSLayoutConstraint.activate([
             cancelBtn.topAnchor.constraint(equalTo: stackView.topAnchor,constant: -21),
             cancelBtn.leftAnchor.constraint(equalTo: stackView.leftAnchor,constant: 42),
