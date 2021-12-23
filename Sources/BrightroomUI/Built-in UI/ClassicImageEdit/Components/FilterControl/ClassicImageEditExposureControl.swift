@@ -50,6 +50,7 @@ open override func setup() {
   
   backgroundColor = ClassicImageEditStyle.default.control.backgroundColor
   backgroundColor = .white
+    valueLabel.font =  UIFont(name: "BarlowCondensed-Light", size: 17)
     ruler.delegate = self
     SliderCode.layout(label: valueLabel, ruler: ruler, in: self, forVignette: false)
     ruler.animateWithValueUpdate(0, duration: 0.5)

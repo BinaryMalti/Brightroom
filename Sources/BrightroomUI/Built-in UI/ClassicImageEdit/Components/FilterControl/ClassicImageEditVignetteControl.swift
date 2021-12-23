@@ -49,6 +49,7 @@ open class ClassicImageEditVignetteControl : ClassicImageEditVignetteControlBase
     
     backgroundColor = ClassicImageEditStyle.default.control.backgroundColor
     backgroundColor = .white
+      valueLabel.font =  UIFont(name: "BarlowCondensed-Light", size: 17)
     SliderCode.layout(label: valueLabel, ruler: ruler, in: self, forVignette: true)
     ruler.delegate = self
     ruler.maximumValue = 50
